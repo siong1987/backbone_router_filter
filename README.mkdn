@@ -1,0 +1,24 @@
+This backbone plugin is inspired by this pull request: https://github.com/documentcloud/backbone/pull/299.
+
+Basically, it enables you to have after and before filter for your Backbone.Router.
+
+For example:
+
+    class BlogRouter extends Backbone.Router
+      before: ->
+        # all before hooks here
+    
+      after: ->
+        # all after hooks here
+
+That's it.
+
+To install this, just include it after backbone.js is loaded.
+
+For example in Rails 3.1,
+
+    //= require jquery
+    //= require jquery_ujs
+    //= require underscore
+    //= require backbone
+    //= require backbone_router_filter
