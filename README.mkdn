@@ -1,6 +1,6 @@
 This backbone plugin is inspired by this pull request: https://github.com/documentcloud/backbone/pull/299.
 
-Basically, it enables you to have after and before filter for your Backbone.Router.
+Basically, it enables you to have after and before filter for your Backbone.Router. Check out more detailed blog post at: http://flochip.com/2011/07/10/before-and-after-filters-for-backbone-router/.
 
 For example:
 
