@@ -1,21 +1,31 @@
+// Simple before and after filter for backbone router
+// https://github.com/FLOChip/backbone_router_filter
 (function() {
   _.extend(Backbone.Router.prototype, Backbone.Events, {
     before: function(){},
     after : function(){},
     route : function(route, name, callback) {
-      Backbone.history || (Backbone.history = new Backbone.History);
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
-      Backbone.history.route(route, _.bind(function(fragment) {
-        var args = this._extractParameters(route, fragment);
-        if( _(this.before).isFunction() ){
-          this.before.apply(this, args);
+      if (_.isFunction(name)) {
+        callback = name;
+        name = '';
+      }
+      if (!callback) callback = this[name];
+      var router = this;
+      Backbone.history.route(route, function(fragment) {
+        var args = router._extractParameters(route, fragment);
+        if( _(router.before).isFunction() ){
+          router.before.apply(this, args);
         }
-        callback.apply(this, args);
+        callback && callback.apply(router, args);
         if( _(this.after).isFunction() ){
           this.after.apply(this, args);
         }
-        this.trigger.apply(this, ['route:' + name].concat(args));
-      }, this));
+        router.trigger.apply(router, ['route:' + name].concat(args));
+        router.trigger('route', name, args);
+        Backbone.history.trigger('route', router, name, args);
+      });
+      return this;
     }
   });
 }).call(this);
